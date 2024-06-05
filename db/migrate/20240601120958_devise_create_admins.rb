@@ -34,8 +34,6 @@ class DeviseCreateAdmins < ActiveRecord::Migration[6.1]
 
 
       t.timestamps null: false
-      t.string :email, null: false
-      t.string :encrypted_password, null: false
     end
 
     add_index :admins, :email,                unique: true
