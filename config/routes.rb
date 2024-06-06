@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    root to: "admin/sessions#new"
+    resources :items
+  end
   devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     sessions: "admin/sessions"
   }
