@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
   namespace :public do
+    get 'orders/new'
+    get 'orders/create'
+    get 'orders/confirm'
+    get 'orders/completed'
+    get 'orders/index'
+    get 'orders/show'
+  end
+  namespace :public do
     get 'cart_items/index'
     get 'cart_items/destroy'
     get 'cart_items/destroy_all'
