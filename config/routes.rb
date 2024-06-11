@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'genres/index'
+    get 'genres/create'
+    get 'genres/edit'
+    get 'genres/update'
+  end
+  namespace :admin do
+    get 'homes/top'
+  end
   namespace :public do
     get 'adresses/index'
     get 'adresses/edit'
