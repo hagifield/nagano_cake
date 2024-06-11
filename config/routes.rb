@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :public do
+    get 'homes/top'
+    get 'homes/about'
+  end
+  root to: "admin/items#new"
+  
   namespace :admin do
     root to: "admin/sessions#new"
     resources :items
