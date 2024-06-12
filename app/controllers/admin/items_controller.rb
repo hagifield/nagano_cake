@@ -17,6 +17,4 @@ class Admin::ItemsController < ApplicationController
   def update
   end
 
-  def destory
-  end
 end
