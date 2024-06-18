@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     
     root to: "homes#top"
     get 'homes/about'
+    get 'customers/confirm' => 'customers#confirm'
+    patch 'customers/withdraw' => 'customers#withdraw'
     resources :addresses
     resources :orders
     resources :cart_items
