@@ -1,2 +1,11 @@
-<h1>Admin::Genres#edit</h1>
-<p>Find me in app/views/admin/genres/edit.html.erb</p>
+<h2>ジャンル編集</h2>
+
+<%= form_with model: [:admin, @genre], local: true, method: :patch do |f| %>
+  <table>
+    <tr>
+      <th>ジャンル名</th>
+      <td><%= f.text_field :name, autofocus: true, value: @genre.name %></td>
+      <td><%= f.submit "変更を保存" %></td>
+    </tr>
+  </table>
+<% end %>
