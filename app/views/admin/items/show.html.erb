@@ -1,2 +1,50 @@
 <h1>Admin::Items#show</h1>
 <p>Find me in app/views/admin/items/show.html.erb</p>
+
+
+<h2>商品詳細</h2>
+
+
+
+<div><!-- 画像セクション -->
+  <%= image_tag @item.get_cake_image(100,100) %>
+</div>
+
+<div><!-- 商品詳細セクション -->
+  <table>
+    <tr>
+      <th>商品名</th>
+      <td><%= @item.name %></td>
+    </tr>
+    
+    <tr>
+      <th>商品説明</th>
+      <td><%= @item.introduction %></td>
+    </tr>
+    
+    <tr>
+      <th>ジャンル</th>
+      <td><%= @item.genre.name %></td>
+    </tr>
+    
+    <tr>
+      <th>税込価格</br>（税抜価格）</th>
+      <td><%= @item.price.to_s(:delimited) %>(<%= ((@item.price*1.1).floor).to_s(:delimited) %>)</td>
+    </tr>
+    
+    <tr>
+      <th>販売ステータス</th>
+      <td>
+        <% if @item.is_active %>
+          販売中
+        <% elsif %>
+          販売停止中
+        <% end %>
+      </td>
+    </tr>
+    
+  </table>
+  
+  <%= link_to "編集する", edit_admin_item_path %>
+  
+</div>
