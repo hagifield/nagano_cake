@@ -9,7 +9,7 @@
   <% end %>
 </h2>
 
-<% @items.each do |item| %>
+
 
   <table>
     
@@ -23,6 +23,7 @@
       </tr>
     </thead>
     
+    <% @items.each do |item| %>
     <tbody>
       <tr>
         <td><%= item.id %></td>
@@ -43,6 +44,16 @@
       </tr>
     </tbody>
     
+    <% end %>
+    
+    <tfoot>
+      <tr>
+        <td><%= paginate @items %></td>
+      </tr>
+    </tfoot>
+    
+    
   </table>
   
-<% end %>
+
+
