@@ -1,2 +1,26 @@
-<h1>Public::Items#index</h1>
-<p>Find me in app/views/public/items/index.html.erb</p>
+<h2>商品一覧</h2>
+
+<% @items.each do |item| %>
+  <%= link_to item_path(item.id) do %>
+    <div class="flex">
+      <div class="flex-item">
+        
+        <div class="item-info">
+          <%= image_tag item.get_cake_image(100,150) %>
+        </div>
+        
+        <div class="item-info">
+          <%= item.name %>
+        </div>
+        
+        <div class="item-info">
+          ¥<%= item.price.to_s(:delimited) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<div>
+  <%= paginate @items %>
+</div>
