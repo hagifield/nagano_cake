@@ -13,7 +13,7 @@ class Admin::CustomersController < ApplicationController
 
   def update
     @customer = Customer.find(params[:id])
-    if @customer.uodate(customer_params)
+    if @customer.update(customer_params)
       flash[:notice] = "ユーザー情報の編集が完了しました"
       redirect_to admin_customer_path(@customer)
     else
@@ -23,6 +23,6 @@ class Admin::CustomersController < ApplicationController
   
   private
   def customer_params
-    params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :address, :postal_code, :telephone_number)
+    params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :email, :address, :postal_code, :telephone_number, :is_active)
   end
 end
