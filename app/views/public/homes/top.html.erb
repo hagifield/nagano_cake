@@ -9,20 +9,22 @@
 <h2>新着商品</h2>
 
 <% @items.each do |item| %>
-  <div>
+  <%= link_to item_path(item) do %>
     <div>
-      <%= image_tag item.get_cake_image(100,100) %>
+      <div>
+        <%= image_tag item.get_cake_image(100,100) %>
+      </div>
+      
+      <p>
+        <%= item.name %>  
+      </p>
+      
+      <p>
+        ¥<%= item.price.to_s(:delimited) %>
+      </p>
+      
     </div>
-    
-    <p>
-      <%= item.name %>  
-    </p>
-    
-    <p>
-      ¥<%= item.price.to_s(:delimited) %>
-    </p>
-    
-  </div>
+  <% end %>
 <% end  %>
 
 <div>

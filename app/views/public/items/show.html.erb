@@ -1,6 +1,3 @@
-<h1>Public::Items#show</h1>
-<p>Find me in app/views/public/items/show.html.erb</p>
-
 <div>
   <%= image_tag @item.get_cake_image(100,100) %>
 </div>
@@ -8,7 +5,7 @@
 <div>
   <p><strong><%= @item.name %></strong></p>
   <p><%= @item.introduction %></p>
-  <p>¥<%= @item.price.to_s(:delimited) %></p>
+  <p>¥<%= ((@item.price*1.1).floor).to_s(:delimited) %><h6>（税込）</h6></p>
   <div><!-- カートに入れる個数選択 -->
     <%= form_with model: @cart_item, url: cart_items_path, local: true do |f| %>
       <%= f.hidden_field :item_id, value: @item.id %>
