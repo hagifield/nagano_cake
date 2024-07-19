@@ -26,7 +26,12 @@ Rails.application.routes.draw do
     get 'customers/confirm' => 'customers#confirm'
     patch 'customers/withdraw' => 'customers#withdraw'
     resources :addresses
-    resources :orders
+    resources :orders do
+      collection do
+        get 'confirm', as: 'confirm'
+        post 'finalize', as: 'finalize'
+      end
+    end
     resources :cart_items do
       collection do
         delete 'destroy_all'
