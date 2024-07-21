@@ -11,7 +11,31 @@
         <th>小計</th>
     </thead>
     
-    <tbody>
-        
-    </tbody>
+    <% @cart_items.each do |cart_item| %>
+        <tbody>
+            <td><%= image_tag cart_item.item.get_cake_image(100,100) %><%= cart_item.item.name %></td>
+            <td><%= (cart_item.item.after_tax_price).to_s(:delimited) %></td>
+            <td><%= cart_item.amount %></td>
+            <td><%= (cart_item.subtotal).to_s(:delimited) %></td>
+        </tbody>
+    <% end %>
 </table>
+
+<table>
+    <tr>
+        <th>送料</th>
+        <td>800</td>
+    </tr>
+    <tr>
+        <th>商品合計</th>
+        <td><%= @total_price.to_s(:delimited)%></td>
+    </tr>
+    <tr>
+        <th>請求金額</th>
+        <td><%= (@total_price + 800).to_s(:delimited) %></td>
+    </tr>
+    
+</table>
+
+<strong><h3>支払い方法</h3></strong>
+<strong><h3>お届け先</h3></strong>

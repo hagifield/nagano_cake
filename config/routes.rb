@@ -28,7 +28,8 @@ Rails.application.routes.draw do
     resources :addresses
     resources :orders do
       collection do
-        get 'confirm', as: 'confirm'
+        
+        post 'confirm', as: 'confirm'
         post 'finalize', as: 'finalize'
       end
     end

@@ -5,7 +5,7 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
-    @order = current_customer.order.new(order_params)
+    @order = current_customer.orders.new(order_params)
     @order.customer_id = current_customer.id
     @order.shipping_fee = 800
     @catr_items = CartItem.where(customer_id: current_customer.id)
@@ -21,8 +21,8 @@ class Public::OrdersController < ApplicationController
     @order.payment_method = params[:order][:payment_method]
     @order.order_status = @order.payment_method == "credit_card" ? 1:0
     
-    address_type = params[:order][:address_type]
-    case address_type
+    @address_type = params[:order][:address_type]
+    case @address_type
     when "customer_address"
       @order.postal_code = current_customer.postal_code
       @order.address = current_customer.address
@@ -38,27 +38,54 @@ class Public::OrdersController < ApplicationController
       @order.name = params[:order][:new_name]
     end
     
-    if @order.save
-      if @order.order_status == 0
-        @cart_items.each do |cart_item|
-          OrderDetail.create!(order_id: @order.id, item_id: cart_item.item.id, price: cart_item.item.price, amount: cart_item.amount, making_status: 0)
-        end
-      else
-        @cart_items.each do |cart_item| 
-          OrderDetail.create!(order_id: @order.id, item_id: cart_item.item.id, price: cart_item.item.price, amount: cart_item.amount, making_status: 1)
-        end
-      end
-      
-      redirect_to confirm_order_path
-    else
-      render :items
-    end
     
   end
 
   def confirm
+    @cart_items = current_customer.cart_items
+    @total_price = @cart_items.inject(0) { |sum, cart_item| sum + (cart_item.item.after_tax_price * cart_item.amount) }
     
-    @cart_items.destroy_all
+   @order = Order.new(order_params)
+    if params[:order][:address_type] == "0"
+      @order.postal_code = current_customer.postal_code
+      @order.address = current_customer.address
+      @order.name = current_customer.last_name + current_customer.first_name
+    elsif params[:order][:address_type] == "1"
+      @address = Address.find(params[:order][:address_id])
+      @order.postal_code = @address.postal_code
+      @order.address = @address.address
+      @order.name = @address.name
+    else
+      
+    end
+  end
+  
+  def finalize
+   
+    # @order.customer_id = current_customer.id
+    # @cart_items = current_customer.cart_items
+    
+    # @order.status = @order.payment_method == "credit_card" ? 1 : 0
+    
+    # if @order.save
+    #   if @order.order_status == 0
+    #     @cart_items.each do |cart_item|
+    #       OrderDetail.create!(order_id: @order.id, item_id: cart_item.item.id, price: cart_item.item.price, amount: cart_item.amount, making_status: 0)
+    #     end
+    #   else
+    #     @cart_items.each do |cart_item| 
+    #       OrderDetail.create!(order_id: @order.id, item_id: cart_item.item.id, price: cart_item.item.price, amount: cart_item.amount, making_status: 1)
+    #     end
+    #   end
+    #   @cart_items.destroy_all
+    #   session.delete(:order)
+    #   session.delete(:cart_items)
+    #   redirect_to confirm_order_path
+    # else
+    #   render :items
+      
+    # end
+    
   end
 
   def completed
@@ -73,7 +100,12 @@ class Public::OrdersController < ApplicationController
   private
   
   def order_params
-  params.require(:order).permit(:payment_method, :postal_code, :address, :name, :address_type, :new_postal_code, :new_address, :new_name)
+    params.require(:order).permit(:payment_method, :postal_code, :address, :name)
   end
+  
+  
+  #def order_params
+    #params.require(:order).permit(:payment_method, :postal_code, :address, :name, :address_type, :new_postal_code, :new_address, :new_name)
+  #end 
   
 end
