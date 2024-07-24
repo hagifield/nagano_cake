@@ -112,14 +112,14 @@ ActiveRecord::Schema.define(version: 2024_07_10_162935) do
     t.integer "item_id", null: false
     t.integer "amount", null: false
     t.integer "charge", null: false
-    t.integer "making_status", null: false
+    t.integer "making_status", default: 0, null: false
   end
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "customer_id", null: false
-    t.integer "order_status", null: false
+    t.integer "order_status", default: 0, null: false
     t.integer "shipping_fee", null: false
     t.integer "charge", null: false
     t.integer "payment_method", null: false

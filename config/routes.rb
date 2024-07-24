@@ -33,6 +33,7 @@ Rails.application.routes.draw do
         post 'finalize', as: 'finalize'
       end
     end
+    get '/orders/completed' => 'orders#completed', as: 'completed'
     resources :cart_items do
       collection do
         delete 'destroy_all'

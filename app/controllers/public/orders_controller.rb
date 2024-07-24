@@ -7,36 +7,51 @@ class Public::OrdersController < ApplicationController
   def create
     @order = current_customer.orders.new(order_params)
     @order.customer_id = current_customer.id
-    @order.shipping_fee = 800
-    @catr_items = CartItem.where(customer_id: current_customer.id)
+    @order.save
     
-    ary = []
+    @cart_items = CartItem.where(customer_id: current_customer.id)
+    
     @cart_items.each do |cart_item|
-      ary << cart_item.item.price * cart_item.amount
+      
+      order_detail = OrderDetail.new
+      order_detail.order_id = @order.id
+      order_detail.item_id = cart_item.item_id
+      order_detail.amount = cart_item.amount
+      order_detail.charge = cart_item.item.after_tax_price
+      
+      order_detail.save
     end
     
-    @cart_items_price = ary.sum
+    @cart_items.destroy_all
     
-    @order.total_price = @cart_items_price + @order.shipping_fee
-    @order.payment_method = params[:order][:payment_method]
-    @order.order_status = @order.payment_method == "credit_card" ? 1:0
+    redirect_to completed_path
+    # ary = []
+    # @cart_items.each do |cart_item|
+    #   ary << cart_item.item.price * cart_item.amount
+    # end
     
-    @address_type = params[:order][:address_type]
-    case @address_type
-    when "customer_address"
-      @order.postal_code = current_customer.postal_code
-      @order.address = current_customer.address
-      @order.name = current_customer.last_name + current_customer.first_name
-    when "registered_address"
-      selected = Address.find(params[:order][:registered_address_id])
-      @order.postal_code = selected.postal_code
-      @order.address = selected.address
-      @order.name = selected.name
-    when "new_address"
-      @order.postal_code = params[:order][:new_postal_code]
-      @order.address = params[:order][:new_address]
-      @order.name = params[:order][:new_name]
-    end
+    # @cart_items_price = ary.sum
+    
+    # @order.total_price = @cart_items_price + @order.shipping_fee
+    # @order.payment_method = params[:order][:payment_method]
+    # @order.order_status = @order.payment_method == "credit_card" ? 1:0
+    
+    # @address_type = params[:order][:address_type]
+    # case @address_type
+    # when "customer_address"
+    #   @order.postal_code = current_customer.postal_code
+    #   @order.address = current_customer.address
+    #   @order.name = current_customer.last_name + current_customer.first_name
+    # when "registered_address"
+    #   selected = Address.find(params[:order][:registered_address_id])
+    #   @order.postal_code = selected.postal_code
+    #   @order.address = selected.address
+    #   @order.name = selected.name
+    # when "new_address"
+    #   @order.postal_code = params[:order][:new_postal_code]
+    #   @order.address = params[:order][:new_address]
+    #   @order.name = params[:order][:new_name]
+    # end
     
     
   end
@@ -92,15 +107,17 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
+    @orders = Order.all
   end
 
   def show
+    
   end
   
   private
   
   def order_params
-    params.require(:order).permit(:payment_method, :postal_code, :address, :name)
+    params.require(:order).permit(:payment_method, :postal_code, :address, :name, :shipping_fee, :charge)
   end
   
   
