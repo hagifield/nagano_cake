@@ -37,8 +37,25 @@
     
 </table>
 
-<strong><h3>支払い方法</h3></strong>
-<strong><h3>お届け先</h3></strong>
+
+<table>
+    <tr>
+        <th><strong>支払い方法</strong></th>
+        <td>
+            <% if @order.payment_method == "credit_card" %>
+                クレジットカード
+            <% else %>
+                銀行振込
+            <% end %>
+        </td>
+    </tr>
+    
+    <tr>
+        <th><strong>お届け先</strong></th>
+        <td><%= @order.postal_code %> <%= @order.address %></br><%= @order.name %></td>
+    </tr>
+</table>
+
 
 <%= form_with model: @order, local: true do |f| %>
     <%= f.hidden_field :shipping_fee, value: 800 %>

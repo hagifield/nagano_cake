@@ -24,7 +24,7 @@ class Public::OrdersController < ApplicationController
     
     @cart_items.destroy_all
     
-    redirect_to completed_path
+    redirect_to orders_completed_path
     # ary = []
     # @cart_items.each do |cart_item|
     #   ary << cart_item.item.price * cart_item.amount
@@ -59,8 +59,9 @@ class Public::OrdersController < ApplicationController
   def confirm
     @cart_items = current_customer.cart_items
     @total_price = @cart_items.inject(0) { |sum, cart_item| sum + (cart_item.item.after_tax_price * cart_item.amount) }
+    @selected_payment_method = params[:order][:payment_method]
     
-   @order = Order.new(order_params)
+    @order = Order.new(order_params)
     if params[:order][:address_type] == "0"
       @order.postal_code = current_customer.postal_code
       @order.address = current_customer.address
@@ -73,6 +74,16 @@ class Public::OrdersController < ApplicationController
     else
       
     end
+    
+    @address_type = params[:order][:address_type]
+    if @address_type == "0"
+      @selected_address = current_customer.postal_code + " " + current_customer.address + " " + current_customer.last_name + current_customer.first_name
+    elsif @address_type == "1"
+      @address = Address.find(params[:order][:address_id])
+      @selected_address = @address.postal_code + " " + @address.address + " " + @address.name
+      
+    end
+    
   end
   
   def finalize
@@ -107,7 +118,8 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.all
+    @orders = current_customer.orders.includes(order_details: :item)
+    
   end
 
   def show
