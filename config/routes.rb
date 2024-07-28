@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     get 'customers/confirm' => 'customers#confirm'
     patch 'customers/withdraw' => 'customers#withdraw'
     resources :addresses
+    get '/orders/completed' => 'orders#completed'
     resources :orders do
       collection do
         
@@ -33,7 +34,7 @@ Rails.application.routes.draw do
         post 'finalize', as: 'finalize'
       end
     end
-    get '/orders/completed' => 'orders#completed'
+
     resources :cart_items do
       collection do
         delete 'destroy_all'
