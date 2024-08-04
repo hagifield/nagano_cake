@@ -1,10 +1,19 @@
 class Admin::OrdersController < ApplicationController
   def index
-    @orders = Order.all.includes(order_details: :item)
+    
+    # @recievers_address = @order.postal_code + @order.address + @order.name
+    if params[:customer_id]
+      @customer = Customer.find(params[:customer_id])
+      @orders = @customer.orders
+    else
+      @orders = Order.all.includes(order_details: :item)
+    end
+    
   end
 
   def show
     @order = Order.find(params[:id])
+    
   end
   
   def edit

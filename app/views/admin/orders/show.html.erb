@@ -1,2 +1,68 @@
 <h1>Admin::Orders#show</h1>
 <p>Find me in app/views/admin/orders/show.html.erb</p>
+
+<h2>注文履歴詳細</h2>
+
+<table>
+  <tr>
+    <th><strong>購入者</strong></th>
+    <td><%= (@order.customer.last_name)+(@order.customer.first_name) %></td>
+  </tr>
+  <tr>
+    <th><strong>注文日</strong></th>
+    <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+  </tr>
+  <tr>
+    <th><strong>配送先</strong></th>
+    <td><%= (@order.postal_code)+(@order.address)+(@order.name) %></td>
+  </tr>
+  <tr>
+    <th><strong>支払い方法</strong></th>
+    <td><%= @order.translated_payment_method %></td>
+  </tr>
+  <tr>
+    <th><strong>注文ステータス</strong></th>
+    <td>
+      <%= @order.translated_order_status %>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>単価（税込）</th>
+      <th>数量</th>
+      <th>小計</th>
+      <th>製作ステータス</th>
+    </tr>
+  </thead>
+  
+  <% @order.order_details.each do |order| %>
+    <tbody>
+      <tr>
+        <td><%= order.item.name %></td>
+        <td><%= order.item.after_tax_price %></td>
+        <td><%= order.amount %></td>
+        <td><%= (order.charge).to_s(:delimited) %></td>
+        <td><%= order.translated_making_status %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+
+<table>
+  <tr>
+    <th><strong>商品合計</strong></th>
+    <td><%= @order.charge.to_s(:delimited) %></td>
+  </tr>
+  <tr>
+    <th><strong>配送料</strong></th>
+    <td>800</td>
+  </tr>
+  <tr>
+    <th><strong>請求金額合計</strong></th>
+    <td><%= ((@order.charge) + 800).to_s(:delimited) %></td>
+  </tr>
+</table>

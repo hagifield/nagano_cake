@@ -7,5 +7,8 @@ class OrderDetail < ApplicationRecord
     (charge * 1.1).floor
   end
   
+  def translated_making_status
+    I18n.t("enums.order_detail.making_status.#{making_status}")
+  end
   
 end
