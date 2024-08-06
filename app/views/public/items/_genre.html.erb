@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>ジャンル検索</th>
+    </tr>
+  </thead>
+  
+  <% genres.each do |genre| %>
+    <tbody>
+      <tr>
+        <th>
+          <%= link_to one_genre_path(genre) do %>
+            <%= genre.name %>
+          <% end %>
+        </th>
+      </tr>
+    </tbody>
+  <% end %>
+</table>

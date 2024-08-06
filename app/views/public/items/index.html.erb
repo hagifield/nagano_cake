@@ -1,4 +1,12 @@
-<h2>商品一覧</h2>
+<%= render 'genre', genres: @genres %>
+
+<h2>
+    <% if params[:genre_id] %>
+        <%= @genre.name %>一覧（全 <%= @genres_count %> 件）
+    <% else %>
+         商品一覧
+    <% end %>
+</h2>
 
 <% @items.each do |item| %>
   <%= link_to item_path(item.id) do %>
