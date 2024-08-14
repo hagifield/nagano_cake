@@ -1,34 +1,48 @@
-<%= render 'public/items/genre', genres: @genres %>
-
-<div>
-  <p>ようこそながのCAKEへ！</br>
-    このサイトは、ケーキ販売のECサイトになります</br>
-    会員でない方も商品の閲覧はできますが、</br>
-    購入には会員登録が必要になります。
-  </p>
-</div>
-
-<h2>新着商品</h2>
-
-<% @items.each do |item| %>
-  <%= link_to item_path(item) do %>
-    <div>
+  <div class="row">
+    <%= render 'public/items/genre', genres: @genres %>
+    
+    <div class="col-md-9 offset-md-1">
+      
       <div>
-        <%= image_tag item.get_cake_image(100,100) %>
+        <p>ようこそながのCAKEへ！</br>
+          このサイトは、ケーキ販売のECサイトになります</br>
+          会員でない方も商品の閲覧はできますが、</br>
+          購入には会員登録が必要になります。
+        </p>
       </div>
       
-      <p>
-        <%= item.name %>  
-      </p>
+      <h2>新着商品</h2>
       
-      <p>
-        ¥<%= item.price.to_s(:delimited) %>
-      </p>
+      <div class="row">
+        <% @items.each do |item| %>
+          <div class="col-3">
+            <%= link_to item_path(item) do %>
+              <div>
+                <div>
+                  <%= image_tag item.get_cake_image(100,100) %>
+                </div>
+                
+                <p>
+                  <%= item.name %>  
+                </p>
+                
+                <p>
+                  ¥<%= item.price.to_s(:delimited) %>
+                </p>
+                
+              </div>
+            <% end %>
+            
+          </div>
+        <% end %>  
+        
+        <div class="col-12 d-flex justify-content-end">
+          <%= link_to "全ての商品を見る", items_path %>
+        </div>
+        
+      </div><!-- 入れ子row終了 -->
       
-    </div>
-  <% end %>
-<% end  %>
-
-<div>
-  <%= link_to "全ての商品を見る", items_path %>
-</div>
+      
+    </div><!-- col9終了 -->
+    
+  </div>

@@ -1,19 +1,23 @@
-<table>
-  <thead>
-    <tr>
-      <th>ジャンル検索</th>
-    </tr>
-  </thead>
-  
-  <% genres.each do |genre| %>
-    <tbody>
-      <tr>
-        <th>
-          <%= link_to one_genre_path(genre) do %>
-            <%= genre.name %>
-          <% end %>
-        </th>
+<div class="col-md-2">
+  <table class="table">
+    <thead>
+      <tr class="text-center">
+        <th>ジャンル検索</th>
       </tr>
-    </tbody>
-  <% end %>
-</table>
+    </thead>
+  
+    <% genres.each do |genre| %>
+      <tbody>
+        <tr>
+          <th>
+            <%= link_to one_genre_path(genre) do %>
+              <%= genre.name %>
+            <% end %>
+          </th>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+
+

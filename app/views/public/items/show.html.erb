@@ -1,22 +1,42 @@
-<%= render 'genre', genres: @genres %>
-
-<div>
-  <%= image_tag @item.get_cake_image(100,100) %>
-</div>
-
-<div>
-  <p><strong><%= @item.name %></strong></p>
-  <p><%= @item.introduction %></p>
-  <p>¥<%= ((@item.price*1.1).floor).to_s(:delimited) %><h6>（税込）</h6></p>
-  <div><!-- カートに入れる個数選択 -->
-    <%= form_with model: @cart_item, url: cart_items_path, local: true do |f| %>
-      <%= f.hidden_field :item_id, value: @item.id %>
-      <div>
-        <%= f.select :amount, options_for_select(1..10), include_blank: "個数選択" %>
+<div class="row">
+  <%= render 'genre', genres: @genres %>
+  
+  <div class="col-md-9 offset-md-1">
+    
+    
+    
+    <div class="d-flex flex-row">
+      
+      <div class="mr-5">
+        <%= image_tag @item.get_cake_image(100,100) %>
       </div>
+      
       <div>
-        <%= f.submit "カートに入れる" %>
+        <h2 class="mb-4"><strong><%= @item.name %></strong></h2>
+        <p class="mb-4"><%= @item.introduction %></p>
+        <div class="d-flex flex-row mb-4">
+          <h3>¥<%= ((@item.price*1.1).floor).to_s(:delimited) %></h3>
+          <p class="fs-6">（税込）</p>
+        </div>
+        <div class="d-flex flex-row"><!-- カートに入れる個数選択 -->
+          <%= form_with model: @cart_item, url: cart_items_path, local: true, html: {class: "d-flex flex-row"} do |f| %>
+            <%= f.hidden_field :item_id, value: @item.id %>
+            <div class="mr-3">
+              <%= f.select :amount, options_for_select(1..10), include_blank: "個数選択" %>
+            </div>
+            <div>
+              <%= f.submit "カートに入れる", class: "btn btn-success" %>
+            </div>
+          <% end %>
+        </div>
       </div>
-    <% end %>
+      
+    </div>
+    
   </div>
 </div>
+
+
+
+
+
