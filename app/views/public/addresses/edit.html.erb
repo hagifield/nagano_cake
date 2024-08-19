@@ -1,24 +1,30 @@
-<h1>Public::Addresses#edit</h1>
-<p>Find me in app/views/public/adresses/edit.html.erb</p>
-
 <h2>配送先編集</h2>
 
-<%= form_with model: @address, local: true do |f| %>
-  <table>
-    <tr>
-      <th>郵便番号</th>
-      <td><%= f.text_field :postal_code, value: @address.postal_code, autofocus: true %></td>
-    </tr>
+<div class="row">
+  
+  <div class="col-md-12">
     
-    <tr>
-      <th>住所</th>
-      <td><%= f.text_field :address, value: @address.address %></td>
-    </tr>
+    <%= form_with model: @address, local: true do |f| %>
+      <table class="my-4">
+        <tr>
+          <th>郵便番号</th>
+          <td><%= f.text_field :postal_code, value: @address.postal_code, autofocus: true %></td>
+        </tr>
+        
+        <tr>
+          <th>住所</th>
+          <td><%= f.text_field :address, value: @address.address %></td>
+        </tr>
+        
+        <tr>
+          <th>宛名</th>
+          <td><%= f.text_field :name, value: @address.name %></td>
+          <td><%= f.submit "変更内容を保存", class:"btn btn-success" %></td>
+        </tr>
+      </table>
+    <% end %>
     
-    <tr>
-      <th>宛名</th>
-      <td><%= f.text_field :name, value: @address.name %></td>
-      <td><%= f.submit "変更内容を保存" %></td>
-    </tr>
-  </table>
-<% end %>
+  </div>
+  
+</div>
+

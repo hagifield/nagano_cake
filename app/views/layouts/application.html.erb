@@ -25,6 +25,9 @@
        <div class="collapse navbar-collapse" id="navbarNavDropdown">
         
         <% if customer_signed_in? %>
+         
+         <p class="mx-5">ようこそ、<%= current_customer.last_name %>さん!</p>
+         
          <ul class = "navbar-nav ml-auto p-2" >
            <li class="nav-item">
             <%= link_to customer_path(current_customer), class:"btn btn-light" do %>

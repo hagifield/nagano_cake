@@ -20,16 +20,18 @@
       <table class="my-5">
         <tr>
           <th>メールアドレス</th>
-          <td colspan="2">
+          <td colspan="4">
             <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "w-100" %>
           </td>
+          <td></td>
         </tr>
         
         <tr>
           <th>パスワード</th>
-          <td colspan="2">
+          <td colspan="4">
             <%= f.password_field :password, autocomplete: "current-password",class:"w-100" %>
           </td>
+          <td></td>
         </tr>
         
         <tr>

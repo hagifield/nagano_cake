@@ -1,69 +1,94 @@
-<h2>注文履歴詳細</h2>
+<h2 class="mx-5">注文履歴詳細</h2>
 
-<h5>注文情報</h5>
+<div class="row my-5">
+  
+  <div class="col-md-8">
+    
+    <h5>注文情報</h5>
 
-<table>
-  <tr>
-    <th>注文日</th>
-    <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
-  </tr>
-  <tr>
-    <th>配送先</th>
-    <td><%= @order.postal_code %></br><%= @order.address %></br><%= @order.name %></td>
-  </tr>
-  <tr>
-    <th>支払い方法</th>
-    <td>
-      <% if @order.payment_method == "credit_card" %>
-          クレジットカード
-      <% else %>
-          銀行振込
-      <% end %>
-    </td>
-  </tr>
-  <tr>
-    <th>ステータス</th>
-    <td><%= @order.translated_order_status %></td>
-  </tr>
-</table>
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-secondary">注文日</th>
+        <td><%= @order.created_at.strftime('%Y/%m/%d') %></td>
+      </tr>
+      <tr>
+        <th class="table-secondary">配送先</th>
+        <td><%= @order.postal_code %></br><%= @order.address %></br><%= @order.name %></td>
+      </tr>
+      <tr>
+        <th class="table-secondary">支払い方法</th>
+        <td>
+          <% if @order.payment_method == "credit_card" %>
+              クレジットカード
+          <% else %>
+              銀行振込
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="table-secondary">ステータス</th>
+        <td><%= @order.translated_order_status %></td>
+      </tr>
+    </table>
+    
+  </div>
+  
+  <div class="col-md-3">
+    
+    <h5>請求情報</h5>
 
-<h5>請求情報</h5>
+    <table class="table table-bordered">
+      <tr>
+        <th class="table-secondary">商品合計</th>
+        <td><%= @order.charge.to_s(:delimited) %></td>
+      </tr>
+      <tr>
+        <th class="table-secondary">配送料</th>
+        <td>800</td>
+      </tr>
+      <tr>
+        <th class="table-secondary">ご請求額</th>
+        <td><%= ((@order.charge) + 800).to_s(:delimited) %></td>
+      </tr>
+    </table>
+    
+  </div>
+  
+  <div class="col-md-1"></div>
+  
+</div>
 
-<table>
-  <tr>
-    <th>商品合計</th>
-    <td><%= @order.charge.to_s(:delimited) %></td>
-  </tr>
-  <tr>
-    <th>配送料</th>
-    <td>800</td>
-  </tr>
-  <tr>
-    <th>ご請求額</th>
-    <td><%= ((@order.charge) + 800).to_s(:delimited) %></td>
-  </tr>
-</table>
+<div class="row">
+  
+  <div class="col-md-12">
+    
+    <h5>注文内容</h5>
 
-
-<h5>注文内容</h5>
-
-<table>
-  <thead>
-    <tr>
-      <th>商品</th>
-      <th>単価（税込）</th>
-      <th>個数</th>
-      <th>小計</th>
-    </tr>
-  </thead>
-    <tbody>
-      <% @order.order_details.each do |order| %>
+    <table class="table table-bordered">
+      <thead class="table-secondary">
         <tr>
-          <td><%= order.item.name %></td>
-          <td><%= (order.item.after_tax_price).to_s(:delimited) %></td>
-          <td><%= order.amount %></td>
-          <td><%= (order.after_tax_price)*order.amount %></td>
+          <th>商品</th>
+          <th>単価（税込）</th>
+          <th>個数</th>
+          <th>小計</th>
         </tr>
-      <% end %>
-    </tbody>
-</table>
+      </thead>
+        <tbody>
+          <% @order.order_details.each do |order| %>
+            <tr>
+              <td><%= order.item.name %></td>
+              <td><%= (order.item.after_tax_price).to_s(:delimited) %></td>
+              <td><%= order.amount %></td>
+              <td><%= (order.after_tax_price)*order.amount %></td>
+            </tr>
+          <% end %>
+        </tbody>
+    </table>
+    
+  </div>
+  
+</div>
+
+
+
+

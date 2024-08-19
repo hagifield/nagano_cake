@@ -1,48 +1,64 @@
-<h2>商品新規登録</h2>
+<h2 class="mx-4">商品新規登録</h2>
 
-
-<%= form_with model: [:admin, @item], local: true do |f| %>
-  <table>
+<div class="row">
+  <div class="col-md-12">
+    
+    <%= form_with model: [:admin, @item], local: true do |f| %>
+    <style>
+      
+      table tr th,
+      table tr td {
+        padding-bottom:10px;
+      }
+      
+    </style>
+    
+      <table class="d-flex justify-content-center my-4">
+    
+        <tr>
+          <th>商品画像</th>
+          <td><%= f.file_field :image, accept: "image/*" %></td>
+        </tr>
+        
+        <tr>
+          <th>商品名</th>
+          <td><%= f.text_field :name, placeholder: "商品名", autofocus: true %></td>
+        </tr>
+        
+        <tr>
+          <th>商品説明</th>
+          <td><%= f.text_field :introduction, placeholder: "ここに説明文を記述します", size:40 %></td>
+        </tr>
+        
+        <tr>
+          <th>ジャンル</th>
+          <td><%= f.collection_select :genre_id, Genre.all, :id, :name, include_blank: "選択して下さい" %></td>
+        </tr>
+        
+        <tr>
+          <th>税抜価格</th>
+          <td><%= f.text_field :price, placeholder: "1000" %>円</td>
+        </tr>
+        
+        <tr>
+          <th>販売ステータス</th>
+          <td>
+            <%= f.radio_button :is_active, :true %>販売中  <%= f.radio_button :is_active, :false %>販売停止中
+          </td>
+          <td>
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <th></th>
+          <td><%= f.submit "新規登録", class:"btn btn-success" %></td>
+        </tr>
+      
+      </table>
+    <% end  %>
+    
+  </div>
   
+</div>
 
-    <tr>
-      <th>商品画像</th>
-      <td><%= f.file_field :image, accept: "image/*" %></td>
-    </tr>
-    
-    <tr>
-      <th>商品名</th>
-      <td><%= f.text_field :name, placeholder: "商品名", autofocus: true %></td>
-    </tr>
-    
-    <tr>
-      <th>商品説明</th>
-      <td><%= f.text_field :introduction, placeholder: "ここに説明文を記述します" %></td>
-    </tr>
-    
-    <tr>
-      <th>ジャンル</th>
-      <td><%= f.collection_select :genre_id, Genre.all, :id, :name, include_blank: "選択して下さい" %></td>
-    </tr>
-    
-    <tr>
-      <th>税抜価格</th>
-      <td><%= f.text_field :price, placeholder: "1000" %>円</td>
-    </tr>
-    
-    <tr>
-      <th>販売ステータス</th>
-      <td>
-        <%= f.radio_button :is_active, :true %>販売中
-      </td>
-      <td>
-        <%= f.radio_button :is_active, :false %>販売停止中
-      </td>
-    </tr>
-    
-    <tr>
-      <td><%= f.submit "新規登録" %></td>
-    </tr>
-  
-  </table>
-<% end  %>
