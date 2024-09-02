@@ -1,4 +1,5 @@
 class Public::CartItemsController < ApplicationController
+  before_action :authenticate_customer!
   def index
     @cart_items = current_customer.cart_items
     @total_price = @cart_items.inject(0) { |sum, cart_item| sum + (((cart_item.item.price*1.1).floor) * cart_item.amount) }
@@ -28,7 +29,8 @@ class Public::CartItemsController < ApplicationController
         flash[:notice] = "カートに商品が入りました"
         redirect_to cart_items_path
       else
-        @item = @cart_item.item
+        @item = @cart_item.item_id
+        @genres = Genre.all
         render 'public/items/show'
       end
     else
@@ -36,7 +38,8 @@ class Public::CartItemsController < ApplicationController
         flash[:notice] = "カートに商品が入りました"
         redirect_to cart_items_path
       else
-        @item = @cart_item.item
+        @item = @cat_item.item_id
+        @genres = Genre.all
         render 'public/items/show'
       end
     end

@@ -63,4 +63,3 @@ gem "enum_help"
 
 gem 'pry-byebug'
 
-gem 'kaminari-bootstrap'

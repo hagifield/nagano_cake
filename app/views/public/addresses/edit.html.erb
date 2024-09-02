@@ -1,3 +1,12 @@
+<% if @address.errors.any? %>
+  <p><%= @address.errors.count %>件のエラーが発生しました</p>
+  <ul>
+    <% @address.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <h2>配送先編集</h2>
 
 <div class="row">

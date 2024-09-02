@@ -16,7 +16,15 @@
       
       <div class="container">
        
-       <a class="navbar-brand p-3" href="/"><span>LOGO</span></a>
+       <% if admin_signed_in? %>
+        <%= link_to admin_items_path, class: "navbar-brand p-3" do %>
+         <p>LOGO</p>
+        <% end %>
+       <% else %>
+        <%= link_to root_path, class: "navbar-brand p-3" do %>
+         <p>LOGO</p>
+        <% end %>
+       <% end %>
        
        <button class="navbar-toggler btn btn-light" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -122,6 +130,8 @@
     
     <main>
      <div class="container my-5 px-5 px-sm-0">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
       <%= yield %>
      </div>
     </main>

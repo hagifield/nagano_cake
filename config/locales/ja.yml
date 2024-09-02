@@ -23,6 +23,51 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+      models:
+        address:
+          attributes:
+            name:
+              blank: "名前を入力してください"
+            postal_code:
+              blank: "郵便番号を入力してください"
+            address:
+              blank: "住所を入力してください"
+        customer:
+          attributes:
+            email:
+              blank: "メールアドレスを入力してください"
+            last_name:
+              blank: "名前（性）を入力してください"
+            first_name:
+              blank: "名前(名)を入力してください"
+            last_name_kana:
+              blank: "フリガナ（性）を入力してください"
+            first_name_kana:
+              blank: "フリガナ（名）を入力してください"
+            postal_code:
+              blank: "郵便番号を入力してください"
+            address:
+              blank: "住所を入力してください"
+            telephone_number:
+              blank: "電話番号を入力してください"
+        item:
+          attributes:
+            name:
+              blank: "商品名を入力してください"
+            introduction:
+              blank: "商品説明を入力してください"
+            price:
+              blank: "価格を入力してください"
+            is_active:
+              blank: "販売ステータスを入力してください"
+            genre_id:
+              blank: "ジャンルを選択してください"
+        genre:
+          attributes:
+            name:
+              blank: "ジャンル名を入力してください"
+          
+
   date:
     abbr_day_names:
     - 日
@@ -99,7 +144,7 @@ ja:
       month: 月
       year: 年
   errors:
-    format: "%{attribute}%{message}"
+    format: "%{message}"
     messages:
       accepted: を受諾してください
       blank: を入力してください

@@ -1,6 +1,7 @@
 class Public::AddressesController < ApplicationController
+  before_action :authenticate_customer!
   def index
-    @addresses = Address.all
+    @addresses = current_customer.addresses
     @address = Address.new
   end
 
@@ -14,7 +15,7 @@ class Public::AddressesController < ApplicationController
         flash[:notice] = "配送先の編集が完了しました"
         redirect_to addresses_path
       else
-        @address = Address.find(params[:id])
+       
         render :edit
       end
   end
@@ -26,8 +27,7 @@ class Public::AddressesController < ApplicationController
         flash[:notice] = "配送先を追加しました"
         redirect_to addresses_path
       else
-        @addresses = Address.all
-        @address = Address.new
+        @addresses = current_customer.addresses
         render :index
       end
   end

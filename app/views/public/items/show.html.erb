@@ -22,7 +22,7 @@
           <%= form_with model: @cart_item, url: cart_items_path, local: true, html: {class: "d-flex flex-row"} do |f| %>
             <%= f.hidden_field :item_id, value: @item.id %>
             <div class="mr-3">
-              <%= f.select :amount, options_for_select(1..10), include_blank: "個数選択" %>
+              <%= f.select :amount, options_for_select(1..10), value: 1 %>
             </div>
             <div>
               <%= f.submit "カートに入れる", class: "btn btn-success" %>

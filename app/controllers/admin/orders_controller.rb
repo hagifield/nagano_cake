@@ -1,4 +1,5 @@
 class Admin::OrdersController < ApplicationController
+  before_action :authenticate_admin!
   def index
     @items = Item.page(params[:page]).per(8)
     # @recievers_address = @order.postal_code + @order.address + @order.name

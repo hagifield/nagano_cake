@@ -1,3 +1,12 @@
+<% if @item.errors.any? %>
+  <p><%= @item.errors.count %>件のエラーが発生しました</p>
+  <ul>
+    <% @item.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <h2 class="mx-4">商品新規登録</h2>
 
 <div class="row">

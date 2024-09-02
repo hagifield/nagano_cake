@@ -1,4 +1,5 @@
 class Admin::ItemsController < ApplicationController
+  before_action :authenticate_admin!
   def new
     @item = Item.new
     
@@ -10,8 +11,9 @@ class Admin::ItemsController < ApplicationController
       flash[:notice] = "新規商品を作成しました"
       redirect_to admin_item_path(@item.id)
     else
-      @item = Item.new
+
       render :new
+      
     end
   end
 
