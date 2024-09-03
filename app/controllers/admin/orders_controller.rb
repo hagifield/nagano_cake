@@ -24,12 +24,20 @@ class Admin::OrdersController < ApplicationController
   def update
     order = Order.find(params[:id])
     if order.update(order_params)
+      
+      if order.order_status == Order.order_statuses.key(1) #注文ステータスが入金確認になったら制作ステータスを制作待ちにする
+        order.order_details.map{|order_detail| order_detail.update(making_status: OrderDetail.making_statuses.key(1)) }
+      end
+      
+      
+      
       flash[:notice] = "編集が完了しました"
       redirect_to admin_order_path(order)
     else
       @order = Order.find(params[:id])
       render :show
     end
+    
   end
   
   private
